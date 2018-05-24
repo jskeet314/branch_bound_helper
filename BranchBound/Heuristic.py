@@ -67,58 +67,68 @@ def getMutationPathWrapperReal(seq, assemble=False):
     return path
 
 def remoteAnswer(answers, seq, assemble=False):
-    start_time = time()
-    # format data to post
-    if assemble:    
-        raw_data = 'SHUKI' + '0' + binaryToString(seq)
-    else:    
-        raw_data = 'SHUKI' + '1' + binaryToString(seq)
-    data = raw_data.encode()
-    
-    # choose which server to call
-    seed = get_seed(seq)
-    
-    if seed == '00':
-        SERVER = API00
-    elif seed == '10':
-        SERVER = API10
-    elif seed == '01':
-        SERVER = API01
-    elif seed == '11':
-        SERVER = API11
-    
-    # post and obtain response
-    response = urllib.request.urlopen(url=SERVER, data=data)
+    try:
+        start_time = time()
+        # format data to post
+        if assemble:    
+            raw_data = 'SHUKI' + '1' + binaryToString(seq)
+        else:    
+            raw_data = 'SHUKI' + '0' + binaryToString(seq)
+        data = raw_data.encode()
+        
+        # choose which server to call
+        seed = get_seed(seq)
+        
+        if seed == '00':
+            SERVER = API00
+        elif seed == '10':
+            SERVER = API10
+        elif seed == '01':
+            SERVER = API01
+        elif seed == '11':
+            SERVER = API11
+        
+        # post and obtain response
+        response = urllib.request.urlopen(url=SERVER, data=data)
 
-    print("remote result! time:", time() - start_time)
-    answers.put(response.read().decode())
+        print("remote result! time:", time() - start_time)
+        answers.put(response.read().decode())
+    except Exception as e:
+        pass
 
 def localPythonAnswer(answers, seq, assemble=False):
-    # start time
-    start_time = time()
-    # obtain and print result
-    result = SIGNATURE + str(getMutationPathWrapperReal(seq, assemble=assemble))
-    # print(result)
-    end_time = time()
+    try:
+        # start time
+        start_time = time()
+        # obtain and print result
+        result = SIGNATURE + str(getMutationPathWrapperReal(seq, assemble=assemble))
+        # print(result)
+        end_time = time()
 
-    print("local result! time:", end_time - start_time)
-    answers.put(result)
+        print("local result! time:", end_time - start_time)
+        answers.put(result)
+    except Exception as e:
+        pass
 
 def localGoAnswer(answers, seq, assemble=False):
-    start_time = time()
-    seq_str = binaryToString(seq)
-    result = subprocess.check_output([r"./heuristic_cache/" + get_go_executable(), "-target=" + seq_str, "-full=" + str(assemble)])
-    result = str(result, 'utf-8')
-    end_time = time();
-    print("go result! time:", end_time - start_time)
-    answers.put(result)
+    try:
+        start_time = time()
+        seq_str = binaryToString(seq)
+        result = subprocess.check_output([r".heuristic_cache/" + get_go_executable(), "-target=" + seq_str, "-full=" + str(assemble)])
+        result = str(result, 'utf-8')
+        end_time = time();
+        print("go result! time:", end_time - start_time)
+        answers.put(result)
+    except Exception as e:
+        pass
 
 def is_answer_valid(answer):
     return True or answer.startswith(SIGNATURE)
 
 def get_answer(seq, assemble=False):
     # functions = [localGoAnswer, localPythonAnswer]
-    functions = [remoteAnswer, localPythonAnswer, localGoAnswer]
+    # functions = [remoteAnswer, localPythonAnswer, localGoAnswer]
+    functions = [remoteAnswer, localPythonAnswer]
     answers = queue.Queue()
     for func in functions:
         thread = threading.Thread(target=func, args=(answers, seq, assemble))

@@ -9,7 +9,7 @@ class PostDevelopCommand(develop):
     def run_chmod(self):
         is_windows = "win" in platform.system().lower()
         if not is_windows:
-            subprocess.check_call(['chmod', '+x' 'heuristic_cache/*'])
+            subprocess.check_call(['chmod', '+x' 'BranchBound/heuristic_cache/*'])
     def run(self):
         self.run_chmod()
         # PUT YOUR POST-INSTALL SCRIPT HERE or CALL A FUNCTION
@@ -20,7 +20,7 @@ class PostInstallCommand(install):
     def run_chmod(self):
         is_windows = "win" in platform.system().lower()
         if not is_windows:
-            subprocess.check_call(['chmod', '+x' 'heuristic_cache/*'])
+            subprocess.check_call(['chmod', '+x' 'BranchBound/heuristic_cache/*'])
     def run(self):
         self.run_chmod()
         # PUT YOUR POST-INSTALL SCRIPT HERE or CALL A FUNCTION
@@ -29,12 +29,12 @@ class PostInstallCommand(install):
 setup(
     name = 'BranchBound',
     packages = ['BranchBound'],
-    version = '0.1.7',  # Ideally should be same as your GitHub release tag varsion
+    version = '1.0',  # Ideally should be same as your GitHub release tag varsion
     description = 'Utility for reducing practical runtime in NP problems',
     author = 'John Skeet',
     author_email = 'jskeet314@gmail.com',
     url = 'https://github.com/jskeet314/branch_bound_helper',
-    download_url = 'https://github.com/jskeet314/branch_bound_helper/archive/0.1.7.tar.gz',
+    download_url = 'https://github.com/jskeet314/branch_bound_helper/archive/1.0.tar.gz',
     keywords = ['branch', 'bound'],
     classifiers = [],
     cmdclass={
