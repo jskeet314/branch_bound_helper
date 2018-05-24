@@ -1,14 +1,21 @@
-from distutils.core import setup
+import setuptools
 
-setup(
-  name = 'branch_bound_package',
-  packages = ['branch_bound_package'],
-  version = '0.1',
-  description = 'A library for assisting branch and bound operations',
-  author = 'John Skeet',
-  author_email = 'jskeet314@gmail.com',
-  url = 'https://github.com/jskeet314/branch_bound_helper',
-  download_url = 'https://github.com/jskeet314/branch_bound_helper/archive/0.1.tar.gz',
-  keywords = ['testing', 'logging', 'example'], 
-  classifiers = [],
+with open("README.md", "r") as fh:
+    long_description = fh.read()
+
+setuptools.setup(
+    name="branch_bound",
+    version="0.0.1",
+    author="John Skeet",
+    author_email="jskeet314@gmail.com",
+    description="A small example package",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
+    url="https://github.com/jskeet314/branch_bound_helper",
+    packages=setuptools.find_packages(),
+    classifiers=(
+        "Programming Language :: Python :: 3",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
+    ),
 )
