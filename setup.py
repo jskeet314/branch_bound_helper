@@ -1,8 +1,8 @@
 from distutils.core import setup
 
 setup(
-    name = 'Branch-Bound',
-    packages = ['Branch-Bound'],
+    name = 'BranchBound',
+    packages = ['BranchBound'],
     version = '0.1.3',  # Ideally should be same as your GitHub release tag varsion
     description = 'Utility for reducing practical runtime in NP problems',
     author = 'John Skeet',
