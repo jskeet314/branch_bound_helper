@@ -1,9 +1,11 @@
-import setuptools
+from setuptools import setup, find_packages  # Always prefer setuptools over distutils
+from codecs import open  # To use a consistent encoding
+from os import path
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
-setuptools.setup(
+setup(
     name="branch_bound",
     version="0.0.1",
     author="John Skeet",
@@ -12,7 +14,7 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/jskeet314/branch_bound_helper",
-    packages=setuptools.find_packages(),
+    packages=find_packages(),
     classifiers=(
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
