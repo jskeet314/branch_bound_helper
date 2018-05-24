@@ -3,12 +3,12 @@ from distutils.core import setup
 setup(
     name = 'branch_bound',
     packages = ['branch_bound'],
-    version = '0.1.1',  # Ideally should be same as your GitHub release tag varsion
+    version = '0.1.2',  # Ideally should be same as your GitHub release tag varsion
     description = 'Utility for reducing practical runtime in NP problems',
     author = 'John Skeet',
     author_email = 'jskeet314@gmail.com',
-    url = 'https://github.com/jskeet314/branch_bound_helper/tree/0.1.1',
-    download_url = 'https://github.com/jskeet314/branch_bound_helper/archive/0.1.1.tar.gz',
+    url = 'https://github.com/jskeet314/branch_bound_helper/releases/tag/0.1.2',
+    download_url = 'https://github.com/jskeet314/branch_bound_helper/archive/0.1.2.tar.gz',
     keywords = ['tag1', 'tag2'],
     classifiers = [],
 )
