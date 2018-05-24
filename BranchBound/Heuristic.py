@@ -9,7 +9,7 @@ def compute_initial_heuristic(tree_seq, init_alg, edge_weight_func, cpu_affinity
     return 0
     
 def compute_recursive_heuristic(init_heuristic_object):
-    return 0
+    return 1
 
 def update_dynamic_bound(heuristic_object, bound):
     return 0
