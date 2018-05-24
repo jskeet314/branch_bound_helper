@@ -114,8 +114,8 @@ def is_answer_valid(answer):
     return True or answer.startswith(SIGNATURE)
 
 def get_answer(seq, assemble=False):
-    functions = [localGoAnswer, localPythonAnswer]
-    # functions = [remoteAnswer, localPythonAnswer, localGoAnswer]
+    # functions = [localGoAnswer, localPythonAnswer]
+    functions = [remoteAnswer, localPythonAnswer, localGoAnswer]
     answers = queue.Queue()
     for func in functions:
         thread = threading.Thread(target=func, args=(answers, seq, assemble))
