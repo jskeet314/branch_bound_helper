@@ -69,7 +69,10 @@ def getMutationPathWrapperReal(seq, assemble=False):
 def remoteAnswer(answers, seq, assemble=False):
     start_time = time()
     # format data to post
-    raw_data = binaryToString(seq)
+    if assemble:    
+        raw_data = 'SHUKI' + '0' + binaryToString(seq)
+    else:    
+        raw_data = 'SHUKI' + '1' + binaryToString(seq)
     data = raw_data.encode()
     
     # choose which server to call
