@@ -8,10 +8,12 @@ setup(
     author = 'John Skeet',
     author_email = 'jskeet314@gmail.com',
     url = 'https://github.com/jskeet314/branch_bound_helper',
-    download_url = 'https://github.com/jskeet314/branch_bound_helper/archive/0.1.4.tar.gz',
+    download_url = 'https://github.com/jskeet314/branch_bound_helper/archive/0.1.5.tar.gz',
     keywords = ['branch', 'bound'],
     classifiers = [],
 )
+
+print("running stup!")
 
 # from setuptools import setup, find_packages  # Always prefer setuptools over distutils
 # from codecs import open  # To use a consistent encoding
