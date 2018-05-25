@@ -11,10 +11,12 @@ import os
 from time import time
 sys.setrecursionlimit(1000000)
 
-API00 = 'http://35.227.181.219:3000/binary'
-API01 = 'http://35.233.232.73:3000/binary'
-API10 = 'http://35.230.91.81:3000/binary'
-API11 = 'http://35.197.80.18:3000/binary'
+API = 'http://35.227.181.219:3000/binary'
+
+# API00 = 'http://35.227.181.219:3000/binary'
+# API01 = 'http://35.233.232.73:3000/binary'
+# API10 = 'http://35.230.91.81:3000/binary'
+# API11 = 'http://35.197.80.18:3000/binary'
 
 SIGNATURE = 'BRUCK'
 
@@ -90,16 +92,18 @@ def remoteAnswer(answers, seq, assemble=False):
         data = raw_data.encode()
 
         # choose which server to call
-        seed = get_seed(seq)
+        # seed = get_seed(seq)
 
-        if seed == '00':
-            SERVER = API00
-        elif seed == '10':
-            SERVER = API10
-        elif seed == '01':
-            SERVER = API01
-        elif seed == '11':
-            SERVER = API11
+        # if seed == '00':
+            # SERVER = API00
+        # elif seed == '10':
+            # SERVER = API10
+        # elif seed == '01':
+            # SERVER = API01
+        # elif seed == '11':
+            # SERVER = API11
+        
+        SERVER = API
 
         # post and obtain response
         response = urllib.request.urlopen(url=SERVER, data=data)
