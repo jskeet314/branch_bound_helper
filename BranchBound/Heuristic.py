@@ -9,6 +9,7 @@ import queue
 import threading
 import sys
 import subprocess
+import os
 from time import time
 
 sys.setrecursionlimit(1000000)
@@ -20,7 +21,7 @@ API11 = 'http://35.197.80.18:3000/binary'
 
 SIGNATURE = 'BRUCK'
 
-def compute_initial_heuristic(tree_seq, init_alg, edge_weight_func, cpu_affinity=1, 
+def compute_initial_heuristic(tree_seq, init_alg, edge_weight_func, cpu_affinity=1,
                                 develop_tree=False, init_branching_factor=1,
                                 dynamic_heuristic=False, recursive_decisions=False):
     # develop_tree represents the assemble variable
@@ -29,15 +30,15 @@ def compute_initial_heuristic(tree_seq, init_alg, edge_weight_func, cpu_affinity
     except Exception as e:
         raise e
     # localGoAnswer
-    
+
     # return 0
-    
+
 def compute_recursive_heuristic(init_heuristic_object):
     return 1
 
 def update_dynamic_bound(heuristic_object, bound):
     return 0
-    
+
 
 
 def getMutationPathWrapperReal(seq, assemble=False):
@@ -68,17 +69,17 @@ def getMutationPathWrapperReal(seq, assemble=False):
 
 def remoteAnswer(answers, seq, assemble=False):
     try:
-        start_time = time()
+        # start_time = time()
         # format data to post
-        if assemble:    
+        if assemble:
             raw_data = 'SHUKI' + '1' + binaryToString(seq)
-        else:    
+        else:
             raw_data = 'SHUKI' + '0' + binaryToString(seq)
         data = raw_data.encode()
-        
+
         # choose which server to call
         seed = get_seed(seq)
-        
+
         if seed == '00':
             SERVER = API00
         elif seed == '10':
@@ -87,11 +88,10 @@ def remoteAnswer(answers, seq, assemble=False):
             SERVER = API01
         elif seed == '11':
             SERVER = API11
-        
+
         # post and obtain response
         response = urllib.request.urlopen(url=SERVER, data=data)
 
-        print("remote result! time:", time() - start_time)
         answers.put(response.read().decode())
     except Exception as e:
         pass
@@ -99,27 +99,28 @@ def remoteAnswer(answers, seq, assemble=False):
 def localPythonAnswer(answers, seq, assemble=False):
     try:
         # start time
-        start_time = time()
+        # start_time = time()
         # obtain and print result
         result = SIGNATURE + str(getMutationPathWrapperReal(seq, assemble=assemble))
         # print(result)
-        end_time = time()
+        # end_time = time()
 
-        print("local result! time:", end_time - start_time)
         answers.put(result)
     except Exception as e:
         pass
 
 def localGoAnswer(answers, seq, assemble=False):
     try:
-        start_time = time()
+        # start_time = time()
         seq_str = binaryToString(seq)
-        result = subprocess.check_output([r".heuristic_cache/" + get_go_executable(), "-target=" + seq_str, "-full=" + str(assemble)])
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        executable_path = os.path.join(dir_path, "heuristic_cache", get_go_executable())
+        result = subprocess.check_output([executable_path, "-target=" + seq_str, "-full=" + str(assemble)])
         result = str(result, 'utf-8')
-        end_time = time();
-        print("go result! time:", end_time - start_time)
+        # end_time = time();
         answers.put(result)
     except Exception as e:
+        print(e)
         pass
 
 def is_answer_valid(answer):
@@ -127,8 +128,8 @@ def is_answer_valid(answer):
 
 def get_answer(seq, assemble=False):
     # functions = [localGoAnswer, localPythonAnswer]
-    # functions = [remoteAnswer, localPythonAnswer, localGoAnswer]
-    functions = [remoteAnswer, localPythonAnswer]
+    functions = [localGoAnswer, remoteAnswer, localPythonAnswer]
+    # functions = [localGoAnswer]
     answers = queue.Queue()
     for func in functions:
         thread = threading.Thread(target=func, args=(answers, seq, assemble))
@@ -146,13 +147,15 @@ def get_answer(seq, assemble=False):
     answer3 = answers.get()
     if (is_answer_valid(answer3)):
         return answer3[len(SIGNATURE):]
-    
+
+    raise Exception("Could not get answer")
+
 
 def solve_main(seq, assemble):
     seq = stringToBinary(seq)
     raise Exception(get_answer(seq, assemble))
-    
-    
+
+
 def get_os():
     python_system = platform.system().lower()
     if "darwin" in python_system:
@@ -167,6 +170,8 @@ def get_os():
         return "openbsd"
     elif "solaris" in python_system:
         return "solaris"
+    elif "netbsd" in python_system:
+        return "netbsd"
 
     python_platform = platform.platform().lower()
     if "darwin" in python_platform:
@@ -181,6 +186,8 @@ def get_os():
         return "openbsd"
     elif "solaris" in python_platform:
         return "solaris"
+    elif "netbsd" in python_platform:
+        return "netbsd"
 
     if "win" in python_system:
         return "windows"
@@ -218,7 +225,7 @@ def get_go_executable():
         cpu = "amd64"
     extension = ".exe" if os == "windows" else ""
     return os + "-" + cpu + extension
-    
+
 def getMutationPathWrapper(seq, assemble=False):
 
     if assemble:
@@ -323,20 +330,20 @@ def stringToBinary(seq):
         digit *= 2
 
     return (length, number)
-    
+
 def get_seed(seq):
     length, number = seq[0], seq[1]
-    
+
     right = str(number & 1)
     left = str(number >> (length - 1))
-    
+
     return left + right
-    
+
 if __name__ == "__main__":
     seq = '000001000110010100111010110111110000'
-    
+
     try:
         compute_initial_heuristic(list(seq), 4, 4)
-        
+
     except Exception as e:
         print(str(e))
