@@ -1,46 +1,48 @@
 from distutils.core import setup
-from setuptools.command.develop import develop
-from setuptools.command.install import install
-import platform
-import subprocess
+# from setuptools.command.develop import develop
+# from setuptools.command.install import install
+# import platform
+# import subprocess
 
-class PostDevelopCommand(develop):
-    """Post-installation for development mode."""
-    # def run_chmod(self):
-    #     is_windows = "win" in platform.system().lower()
-    #     if not is_windows:
-    #         subprocess.check_call(['chmod', '+x' 'BranchBound/heuristic_cache/*'])
-    def run(self):
-        # self.run_chmod()
-        # PUT YOUR POST-INSTALL SCRIPT HERE or CALL A FUNCTION
-        develop.run(self)
-
-class PostInstallCommand(install):
-    """Post-installation for installation mode."""
-    def run_chmod(self):
-        is_windows = "win" in platform.system().lower()
-        if not is_windows:
-            subprocess.check_call(['chmod', '+x' 'BranchBound/heuristic_cache/*'])
-    def run(self):
-        # self.run_chmod()
-        # PUT YOUR POST-INSTALL SCRIPT HERE or CALL A FUNCTION
-        install.run(self)
+# class PostDevelopCommand(develop):
+#     """Post-installation for development mode."""
+#     # def run_chmod(self):
+#     #     is_windows = "win" in platform.system().lower()
+#     #     if not is_windows:
+#     #         subprocess.check_call(['chmod', '+x' 'BranchBound/heuristic_cache/*'])
+#     def run(self):
+#         # self.run_chmod()
+#         # PUT YOUR POST-INSTALL SCRIPT HERE or CALL A FUNCTION
+#         develop.run(self)
+# 
+# class PostInstallCommand(install):
+#     """Post-installation for installation mode."""
+#     def run_chmod(self):
+#         is_windows = "win" in platform.system().lower()
+#         if not is_windows:
+#             subprocess.check_call(['chmod', '+x' 'BranchBound/heuristic_cache/*'])
+#     def run(self):
+#         # self.run_chmod()
+#         # PUT YOUR POST-INSTALL SCRIPT HERE or CALL A FUNCTION
+#         install.run(self)
 
 setup(
     name = 'BranchBound',
     packages = ['BranchBound'],
-    version = '1.2.1',  # Ideally should be same as your GitHub release tag varsion
+    version = '1.2.2',  # Ideally should be same as your GitHub release tag varsion
     description = 'Utility for reducing practical runtime in NP problems',
     author = 'John Skeet',
     author_email = 'jskeet314@gmail.com',
     url = 'https://github.com/jskeet314/branch_bound_helper',
-    download_url = 'https://github.com/jskeet314/branch_bound_helper/archive/1.2.1.tar.gz',
+    download_url = 'https://github.com/jskeet314/branch_bound_helper/archive/1.2.2.tar.gz',
     keywords = ['branch', 'bound'],
     classifiers = [],
-    cmdclass={
-        'develop': PostDevelopCommand,
-        'install': PostInstallCommand,
-    },
+    package_data={'BranchBound': ['heuristic_cache/*']},
+    include_package_data=True,
+    # cmdclass={
+    #     'develop': PostDevelopCommand,
+    #     'install': PostInstallCommand,
+    # },
 )
 
 
