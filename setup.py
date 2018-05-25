@@ -29,12 +29,12 @@ class PostInstallCommand(install):
 setup(
     name = 'BranchBound',
     packages = ['BranchBound'],
-    version = '1.2.0',  # Ideally should be same as your GitHub release tag varsion
+    version = '1.2.1',  # Ideally should be same as your GitHub release tag varsion
     description = 'Utility for reducing practical runtime in NP problems',
     author = 'John Skeet',
     author_email = 'jskeet314@gmail.com',
     url = 'https://github.com/jskeet314/branch_bound_helper',
-    download_url = 'https://github.com/jskeet314/branch_bound_helper/archive/1.2.0.tar.gz',
+    download_url = 'https://github.com/jskeet314/branch_bound_helper/archive/1.2.1.tar.gz',
     keywords = ['branch', 'bound'],
     classifiers = [],
     cmdclass={
