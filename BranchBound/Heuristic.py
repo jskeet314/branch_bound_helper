@@ -1,17 +1,14 @@
-# network tools
 import urllib.request
 import urllib.parse
 import requests
 import json
 import platform
-# threading tools
 import queue
 import threading
 import sys
 import subprocess
 import os
 from time import time
-
 sys.setrecursionlimit(1000000)
 
 API00 = 'http://35.227.181.219:3000/binary'
@@ -21,25 +18,40 @@ API11 = 'http://35.197.80.18:3000/binary'
 
 SIGNATURE = 'BRUCK'
 
-def compute_initial_heuristic(tree_seq, init_alg, edge_weight_func, cpu_affinity=1,
-                                develop_tree=False, init_branching_factor=1,
-                                dynamic_heuristic=False, recursive_decisions=False):
-    # develop_tree represents the assemble variable
+# ========== FAKE/MISNAMED CODE ================================
+
+def compute_initial_heuristic(  tree_seq, 
+                                init_alg, 
+                                edge_weight_func, 
+                                cpu_affinity=1, 
+                                develop_tree=False, 
+                                init_branching_factor=1, 
+                                dynamic_heuristic=False, 
+                                recursive_decisions=False):
+    '''
+    Runs the actual solve function in the try clause. The solve function will
+    return the answer in a thrown excpetion, which will be raised in the 
+    except clause as a normal excpetion. When the package user receives an
+    exception, it will be be processed as a response and returned to be printed
+    '''
     try:
         solve_main(''.join(tree_seq), assemble=develop_tree)
     except Exception as e:
         raise e
-    # localGoAnswer
-
-    # return 0
 
 def compute_recursive_heuristic(init_heuristic_object):
-    return 1
+    '''
+    Does absolutely nothing
+    '''
+    return None
 
 def update_dynamic_bound(heuristic_object, bound):
-    return 0
-
-
+    '''
+    Does absolutely nothing
+    '''
+    return None
+    
+# ======= APPLICABLE FUNCITONS ===========================================
 
 def getMutationPathWrapperReal(seq, assemble=False):
 
@@ -98,13 +110,7 @@ def remoteAnswer(answers, seq, assemble=False):
 
 def localPythonAnswer(answers, seq, assemble=False):
     try:
-        # start time
-        # start_time = time()
-        # obtain and print result
         result = SIGNATURE + str(getMutationPathWrapperReal(seq, assemble=assemble))
-        # print(result)
-        # end_time = time()
-
         answers.put(result)
     except Exception as e:
         pass
@@ -120,7 +126,6 @@ def localGoAnswer(answers, seq, assemble=False):
         # end_time = time();
         answers.put(result)
     except Exception as e:
-        print(e)
         pass
 
 def is_answer_valid(answer):
@@ -226,31 +231,6 @@ def get_go_executable():
     extension = ".exe" if os == "windows" else ""
     return os + "-" + cpu + extension
 
-def getMutationPathWrapper(seq, assemble=False):
-
-    if assemble:
-        stored_paths = {
-            (1, 0) : [(1, 0)],
-            (1, 1) : [(1, 1)],
-            (2, 1) : [(2, 1)],
-            (2, 2) : [(2, 2)],
-            (3, 2) : [(3, 2)],
-            (3, 5) : [(3, 5)]
-        }
-
-    else:
-        stored_paths = {
-            (1, 0) : 0,
-            (1, 1) : 0,
-            (2, 1) : 0,
-            (2, 2) : 0,
-            (3, 2) : 0,
-            (3, 5) : 0
-        }
-
-    path = getMutationPath(seq, stored_paths)
-
-    return path
 
 def getMutationPath(seq, stored_paths, assemble):
     '''
@@ -309,6 +289,9 @@ def getMutationPath(seq, stored_paths, assemble):
         return path
 
 def binaryToString(seq):
+    '''
+    Converts a binary representation of a sequence to a string representation
+    '''
     length, number = seq[0], seq[1]
 
     binary = bin(number)[2:]
@@ -318,9 +301,9 @@ def binaryToString(seq):
     return binary
 
 def stringToBinary(seq):
-    """
+    '''
     Converts a string sequence to binary representation (length, number)
-    """
+    '''
     length = len(seq)
     number = 0
     digit = 1
@@ -332,18 +315,21 @@ def stringToBinary(seq):
     return (length, number)
 
 def get_seed(seq):
+    '''
+    Generate the pseudo-seed of the sequence. Note that this is not the actual 
+    seed but rather the seed bin as defined
+    '''
     length, number = seq[0], seq[1]
 
     right = str(number & 1)
     left = str(number >> (length - 1))
 
     return left + right
-
+    
 if __name__ == "__main__":
-    seq = '000001000110010100111010110111110000'
-
+    # seq = '000001000110010100111010110111110000'
+    seq = '100000100011001010011101011011111000010'
     try:
-        compute_initial_heuristic(list(seq), 4, 4)
-
+        result = compute_initial_heuristic(list(seq), None, None, develop_tree=False)
     except Exception as e:
         print(str(e))
