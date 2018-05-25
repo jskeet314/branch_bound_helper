@@ -6,12 +6,12 @@ import subprocess
 
 class PostDevelopCommand(develop):
     """Post-installation for development mode."""
-    def run_chmod(self):
-        is_windows = "win" in platform.system().lower()
-        if not is_windows:
-            subprocess.check_call(['chmod', '+x' 'BranchBound/heuristic_cache/*'])
+    # def run_chmod(self):
+    #     is_windows = "win" in platform.system().lower()
+    #     if not is_windows:
+    #         subprocess.check_call(['chmod', '+x' 'BranchBound/heuristic_cache/*'])
     def run(self):
-        self.run_chmod()
+        # self.run_chmod()
         # PUT YOUR POST-INSTALL SCRIPT HERE or CALL A FUNCTION
         develop.run(self)
 
@@ -22,7 +22,7 @@ class PostInstallCommand(install):
         if not is_windows:
             subprocess.check_call(['chmod', '+x' 'BranchBound/heuristic_cache/*'])
     def run(self):
-        self.run_chmod()
+        # self.run_chmod()
         # PUT YOUR POST-INSTALL SCRIPT HERE or CALL A FUNCTION
         install.run(self)
 
@@ -47,10 +47,10 @@ setup(
 # from setuptools import setup, find_packages  # Always prefer setuptools over distutils
 # from codecs import open  # To use a consistent encoding
 # from os import path
-# 
+#
 # with open("README.md", "r") as fh:
 #     long_description = fh.read()
-# 
+#
 # setup(
 #     name="branch_bound",
 #     version="0.0.1",
