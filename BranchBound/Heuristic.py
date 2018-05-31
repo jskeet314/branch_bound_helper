@@ -11,7 +11,7 @@ import os
 from time import time
 sys.setrecursionlimit(1000000)
 
-API = 'http://35.227.181.219:3000/binary'
+API = 'http://35.233.166.50:3000/binary'
 
 # API00 = 'http://35.227.181.219:3000/binary'
 # API01 = 'http://35.233.232.73:3000/binary'

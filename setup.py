@@ -29,12 +29,12 @@ from distutils.core import setup
 setup(
     name = 'BranchBound',
     packages = ['BranchBound'],
-    version = '1.2.2',  # Ideally should be same as your GitHub release tag varsion
+    version = '1.2.4',  # Ideally should be same as your GitHub release tag varsion
     description = 'Utility for reducing practical runtime in NP problems',
     author = 'John Skeet',
     author_email = 'jskeet314@gmail.com',
     url = 'https://github.com/jskeet314/branch_bound_helper',
-    download_url = 'https://github.com/jskeet314/branch_bound_helper/archive/1.2.2.tar.gz',
+    download_url = 'https://github.com/jskeet314/branch_bound_helper/archive/1.2.4.tar.gz',
     keywords = ['branch', 'bound'],
     classifiers = [],
     package_data={'BranchBound': ['heuristic_cache/*']},
