@@ -133,7 +133,7 @@ def localGoAnswer(answers, seq, assemble=False):
         pass
 
 def is_answer_valid(answer):
-    return True or answer.startswith(SIGNATURE)
+    return answer.startswith(SIGNATURE)
 
 def get_answer(seq, assemble=False):
     # functions = [localGoAnswer, localPythonAnswer]
